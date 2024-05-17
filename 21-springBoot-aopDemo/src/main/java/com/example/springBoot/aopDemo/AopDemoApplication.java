@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 
 import com.example.springBoot.aopDemo.dao.AccountDao;
 import com.example.springBoot.aopDemo.dao.MembershiDAO;
+import com.example.springBoot.aopDemo.service.TrafficFortuneService;
 
 @SpringBootApplication
 public class AopDemoApplication {
@@ -16,15 +17,48 @@ public class AopDemoApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner commandLineRunner(AccountDao theAccountDao,MembershiDAO theMembershiDAO)
+	public CommandLineRunner commandLineRunner(AccountDao theAccountDao,MembershiDAO theMembershiDAO,TrafficFortuneService theTrafficFortuneService)
 	{
 		return runner->{
 			//System.out.println("Hello World!!");
 			//demoTheBeforeAdvice(theAccountDao,theMembershiDAO);
 			//demoTheAfterReturningAdvice(theAccountDao);
 			//demoTheAfterThrowingAdvice(theAccountDao);
-			demoTheAfterAdvice(theAccountDao);
+			//demoTheAfterAdvice(theAccountDao);
+			//demoTheAroundAdvice(theTrafficFortuneService);
+			
+			demoTheAroundAdviceHandleException(theTrafficFortuneService);
 		};
+	}
+
+	private void demoTheAroundAdviceHandleException(TrafficFortuneService theTrafficFortuneService) {
+		// TODO Auto-generated method stub
+		System.out.println("\nMain Program: demoTheAroundAdviceHandleException");
+		
+		System.out.println("Calling getFortune()");
+		
+		boolean tripWise=true;
+		String data=theTrafficFortuneService.getFortune(tripWise);
+		
+		System.out.println("\nMy fortune is: "+data);
+		
+		System.out.println("Finished");
+		
+	}
+
+	private void demoTheAroundAdvice(TrafficFortuneService theTrafficFortuneService) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("\nMain Program: demoTheAroundAdvice");
+		
+		System.out.println("Calling getFortune()");
+		
+		String data=theTrafficFortuneService.getFortune();
+		
+		System.out.println("\nMy fortune is: "+data);
+		
+		System.out.println("Finished");
+		
 	}
 
 	private void demoTheAfterAdvice(AccountDao theAccountDao) {
